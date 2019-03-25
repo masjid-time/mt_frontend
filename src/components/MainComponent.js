@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
+import RequestPromise from 'request-promise'
 import AddressCard from './AddressCard'
-import Request from 'request'
-import Loader from './Loader';
+import Loader from './Loader'
 
 class MainComponent extends Component {
     constructor() {
@@ -11,28 +11,21 @@ class MainComponent extends Component {
         }
     }
 
-    getNewsUpdates(){
-        return new Promise((resolve, reject) => {
-            Request('https://newsapi.org/v2/top-headlines?country=in&apiKey=f0180cd3389c453f87d795834c5b4dba',
-            (err, resp, body) => {
-                if (err) {
-                    reject(err)
-                    return
-                }
-                resolve(JSON.parse(body))
-            }
-        )
-        })
-    }
-
     async componentDidMount() {
-        this.body = await this.getNewsUpdates()
-        this.articles = this.body.articles
-        this.addressCard = await this.articles.map((article) => <AddressCard title={article.title} />)
-        console.log(this.addressCard)
-        this.setState({
-            isLoading: false
-        })
+        try {
+            this.body = await RequestPromise('http://localhost:5000/api/v1/mosques', {timeout: 5000, json: true})
+            this.addressCard = await this.body.mosques.map((mosque) => <AddressCard key={mosque.id} title={mosque.name} />)
+        } catch (err) {
+            if (err.error.message === 'Failed to fetch') {
+                this.addressCard = <AddressCard title="Failed to fetch" />
+            } else {
+                this.addressCard = <AddressCard title="Some error occured" />
+            } 
+        } finally {
+            this.setState({
+                isLoading: false
+            })
+        }
     }
 
     render() {
