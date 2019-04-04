@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
 import RequestPromise from 'request-promise'
-import AddressCard from './AddressCard'
+import ListItem from './ListItem'
 import Loader from './Loader'
 
-class MainComponent extends Component {
+
+class Lister extends Component {
     constructor() {
         super()
         this.state = {
@@ -13,13 +14,14 @@ class MainComponent extends Component {
 
     async componentDidMount() {
         try {
-            this.body = await RequestPromise('https://prayertiming-backend.herokuapp.com/api/v1/mosques', {timeout: 5000, json: true})
-            this.addressCard = await this.body.mosques.map((mosque) => <AddressCard key={mosque.id} title={mosque.name} />)
+            console.log('.env variable process.env.NAME-->', process.env.NAME)
+            this.body = await RequestPromise('http://localhost:5000/api/v1/mosques', {timeout: 5000, json: true})
+            this.items = await this.body.mosques.map((mosque) => <ListItem key={mosque.id} title={mosque.name} locality={mosque.locality}/>)
         } catch (err) {
             if (err.error.message === 'Failed to fetch') {
-                this.addressCard = <AddressCard title="Failed to fetch" />
+                this.items = <ListItem title="Failed to fetch" />
             } else {
-                this.addressCard = <AddressCard title="Some error occured" />
+                this.items = <ListItem title="Some error occured" />
             } 
         } finally {
             this.setState({
@@ -36,10 +38,10 @@ class MainComponent extends Component {
         }
         return(
             <div className="container-fluid">
-                {this.addressCard}
+                {this.items}
             </div>
         )
     }
 }
 
-export default MainComponent;
+export default Lister
