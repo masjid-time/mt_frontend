@@ -23,12 +23,4 @@ class ListItem extends Component {
     )}
 }
 
-
-{/* <div className="card-text col-md-4">
-<address ><strong> Twitter, Inc. </strong></address>
-<address> 1355 Market St, Suite 900 </address>
-<address> San Francisco, CA 94103 </address>
-<address> P: (123) 456-7890</address>
-</div> */}
-
 export default ListItem

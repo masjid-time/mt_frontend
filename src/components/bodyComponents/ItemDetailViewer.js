@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
+import {Redirect} from 'react-router-dom'
 import RequestPromise from 'request-promise'
-import {Link} from 'react-router-dom'
-import ListItem from './ListItem'
 import Loader from './Loader'
+import ItemDetail from './ItemDetail'
 import Alert from './Alert'
+import Lister from './Lister'
 
 
-class Lister extends Component {
+class ItemDetailViewer extends Component {
     constructor() {
         super()
         this.state = {
@@ -16,13 +17,12 @@ class Lister extends Component {
 
     async componentDidMount() {
         try {
-            this.body = await RequestPromise(`${process.env.REACT_APP_API_URL}/api/v1/mosques`, {timeout: 5000, json: true})
-            this.mosqueList = await this.body.mosques.map((mosque) =>
-            <Link to={`/mosquedetail/${mosque.id}`} className="text-reset text-decoration-none" key={mosque.id}>
-                <ListItem title={mosque.name} locality={mosque.locality}/>
-            </Link>
-            )
-            this.displayItem = <div className="container">{this.mosqueList}</div>      
+            this.body = await RequestPromise(`${process.env.REACT_APP_API_URL}/api/v1/mosquedetail/${this.props.id}`, {timeout: 5000, json: true})
+            if (this.body.found) {
+                this.displayItem = <ItemDetail name={this.body.name} address={this.body.address} phone={this.body.phone} time={this.body.time} />
+            } else {
+                this.displayItem = <Redirect exact path="/" component={Lister} />
+            }
         } catch (err) {
             if (err.error.message === 'Failed to fetch') {
                 this.displayItem = <Alert message="Failed to fetch details" />
@@ -38,14 +38,10 @@ class Lister extends Component {
 
     render() {
         if (this.state.isLoading) {
-            return(
-               <Loader />
-            )
+            return(<Loader />)
         }
-        return(
-            this.displayItem
-        )
+        return(this.displayItem)
     }
 }
 
-export default Lister
+export default ItemDetailViewer
