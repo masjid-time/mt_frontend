@@ -17,9 +17,9 @@ class ItemDetailViewer extends Component {
 
     async componentDidMount() {
         try {
-            this.body = await RequestPromise(`${process.env.REACT_APP_API_URL}/api/v1/mosquedetail/${this.props.id}`, {timeout: 5000, json: true})
-            if (this.body.found) {
-                this.displayItem = <ItemDetail name={this.body.name} address={this.body.address} phone={this.body.phone} time={this.body.time} />
+            let body = await RequestPromise(`${process.env.REACT_APP_API_URL}/api/v1/mosquedetail/${this.props.id}`, {timeout: 5000, json: true})
+            if (body.found) {
+                this.displayItem = <ItemDetail name={body.name} address={body.address} phone={body.phone} time={body.time} />
             } else {
                 this.displayItem = <Redirect exact path="/" component={Lister} />
             }
