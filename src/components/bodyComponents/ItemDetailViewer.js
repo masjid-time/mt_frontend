@@ -1,47 +1,59 @@
-import React, {Component} from 'react'
-import {Redirect} from 'react-router-dom'
-import RequestPromise from 'request-promise'
-import Loader from './Loader'
-import ItemDetail from './ItemDetail'
-import Alert from './Alert'
-import Lister from './Lister'
-
+import React, { Component } from 'react';
+import RequestPromise from 'request-promise';
+import Loader from './Loader';
+import ItemDetail from './ItemDetail';
+import Alert from './Alert';
 
 class ItemDetailViewer extends Component {
     constructor() {
-        super()
+        super();
         this.state = {
             isLoading: true
-        }
+        };
     }
 
     async componentDidMount() {
         try {
-            let body = await RequestPromise(`${process.env.REACT_APP_API_URL}/api/v1/mosquedetail/${this.props.id}`, {timeout: 5000, json: true})
-            if (body.found) {
-                this.displayItem = <ItemDetail name={body.name} address={body.address} phone={body.phone} time={body.time} />
-            } else {
-                this.displayItem = <Redirect exact path="/" component={Lister} />
-            }
+            let requestOptions = {
+                uri: `${process.env.REACT_APP_API_URL}/api/v1/mosquedetail`,
+                qs: {
+                    id: this.props.params.id,
+                    place_id: this.props.params.place_id,
+                    distance: this.props.params.distance
+                },
+                timeout: 5000,
+                json: true
+            };
+
+            let body = await RequestPromise(requestOptions);
+            this.displayItem = (
+                <ItemDetail
+                    name={body.name}
+                    address={body.address}
+                    time={body.time}
+                    distance={body.distance}
+                    last_updated={body.last_updated}
+                />
+            );
         } catch (err) {
             if (err.error.message === 'Failed to fetch') {
-                this.displayItem = <Alert message="Failed to fetch details" />
+                this.displayItem = <Alert message='Failed to fetch details' />;
             } else {
-                this.displayItem = <Alert message="Some error occured" />
-            } 
+                this.displayItem = <Alert message='Some error occured' />;
+            }
         } finally {
             this.setState({
                 isLoading: false
-            })
+            });
         }
     }
 
     render() {
         if (this.state.isLoading) {
-            return(<Loader />)
+            return <Loader />;
         }
-        return(this.displayItem)
+        return this.displayItem;
     }
 }
 
-export default ItemDetailViewer
+export default ItemDetailViewer;

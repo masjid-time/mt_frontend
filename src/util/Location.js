@@ -1,42 +1,46 @@
-import PublicIp from 'public-ip'
-import IpLocation from 'iplocation'
+import PublicIp from 'public-ip';
+import IpLocation from 'iplocation';
 
 function getGeoLocation() {
-    return new Promise(
-        (resolve, reject) => {
-            navigator.geolocation.getCurrentPosition(
-                pos => {resolve({latitude: pos.coords.latitude, longitude: pos.coords.longitude})},
-                err => {reject(err)},
-                {enableHighAccuracy: true, timeout: 5000, maximumAge: 0}
-            )
-        }
-    )
+    return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(
+            pos => {
+                resolve({
+                    latitude: pos.coords.latitude,
+                    longitude: pos.coords.longitude
+                });
+            },
+            err => {
+                reject(err);
+            },
+            { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+        );
+    });
 }
 
 async function getIpLocation() {
-    let location
+    let location;
     try {
-        let ip = await PublicIp.v4()
-        location = await IpLocation(ip, [])
-        return {latitude: location.latitude, longitude: location.longitude}
-    } catch(err) {
-        throw new Error('Could not find ip location')
+        let ip = await PublicIp.v4();
+        location = await IpLocation(ip, []);
+        return { latitude: location.latitude, longitude: location.longitude };
+    } catch (err) {
+        throw new Error('Could not find ip location');
     }
 }
 
 async function getLocation() {
-    let position
+    let position;
     try {
         if (navigator.geolocation) {
-            position = await getGeoLocation()
+            position = await getGeoLocation();
         } else {
-            throw new Error('Unable to get location object')
+            throw new Error('Unable to get location object');
         }
-    } catch(err) {
-        position = await getIpLocation()
+    } catch (err) {
+        position = await getIpLocation();
     }
-    return position
+    return position;
 }
 
-
-export {getLocation}
+export { getLocation };
