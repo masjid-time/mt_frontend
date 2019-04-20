@@ -9,6 +9,12 @@ class Body extends Component {
             <div>
                 <Route exact path='/' component={Lister} />
                 <Route
+                    path='/search/:place'
+                    render={({ match }) => (
+                        <Lister place={match.params.place} />
+                    )}
+                />
+                <Route
                     path='/mosquedetail/:id/:place_id/:distance'
                     render={({ match }) => (
                         <ItemDetailViewer params={match.params} />

@@ -16,13 +16,19 @@ class Lister extends Component {
 
     async componentDidMount() {
         try {
-            let position = await getLocation();
-            let requestOptions = {
-                uri: `${process.env.REACT_APP_API_URL}/api/v1/mosques`,
-                qs: {
+            let qs;
+            if (this.props.place) {
+                qs = { place: this.props.place };
+            } else {
+                let position = await getLocation();
+                qs = {
                     lat: position.latitude,
                     lng: position.longitude
-                },
+                };
+            }
+            let requestOptions = {
+                uri: `${process.env.REACT_APP_API_URL}/api/v1/mosques`,
+                qs,
                 timeout: 5000,
                 json: true
             };
