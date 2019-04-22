@@ -6,7 +6,7 @@ import ItemDetailViewer from './bodyComponents/ItemDetailViewer';
 class Body extends Component {
     render() {
         return (
-            <div>
+            <>
                 <Route exact path='/' component={Lister} />
                 <Route
                     path='/search/:place'
@@ -20,7 +20,7 @@ class Body extends Component {
                         <ItemDetailViewer params={match.params} />
                     )}
                 />
-            </div>
+            </>
         );
     }
 }
