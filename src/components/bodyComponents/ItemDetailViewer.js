@@ -28,6 +28,7 @@ class ItemDetailViewer extends Component {
             let body = await RequestPromise(requestOptions);
             this.displayItem = (
                 <ItemDetail
+                    id={body.id}
                     name={body.name}
                     address={body.address}
                     time={body.time}

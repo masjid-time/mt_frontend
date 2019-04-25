@@ -32,7 +32,6 @@ class Lister extends Component {
             isLoadingMore: true
         });
         try {
-            console.log('load more 1', this.state); // to be deleted
             let requestOptions = {
                 uri: `${process.env.REACT_APP_API_URL}/api/v1/mosques`,
                 qs: {
@@ -73,13 +72,11 @@ class Lister extends Component {
             this.setState({
                 isLoadingMore: false
             });
-            console.log('load more 2', this.state); // to be deleted
         }
     }
 
     async componentDidMount() {
         try {
-            console.log('component mount 1', this.state); // to be deleted
             let qs;
             if (this.props.place) {
                 qs = { place: this.props.place };
@@ -128,7 +125,6 @@ class Lister extends Component {
             this.setState({
                 isLoading: false
             });
-            console.log('component mount 2', this.state); // to be deleted
         }
     }
 
