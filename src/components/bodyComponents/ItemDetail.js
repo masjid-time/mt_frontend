@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Formik, Form, Field } from 'formik';
 import RequestPromise from 'request-promise';
+import { toast } from 'react-toastify';
 
 class ItemDetail extends Component {
     constructor() {
@@ -51,9 +52,12 @@ class ItemDetail extends Component {
                     },
                     last_updated: 'Updated Just Now'
                 });
+                toast.success('Data saved successfully');
             } else {
+                toast.error('Failed to save data');
             }
         } catch {
+            toast.error('Failed to save data');
         } finally {
             this.setState({ isEditing: false });
         }
