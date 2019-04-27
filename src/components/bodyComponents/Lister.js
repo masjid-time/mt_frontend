@@ -60,7 +60,16 @@ class Lister extends Component {
                 mosqueList: [...this.state.mosqueList, ...updatedMosqueList]
             });
             this.displayItem = (
-                <div className='container'>{this.state.mosqueList}</div>
+                <div className='container'>
+                    {this.props.place ? (
+                        <div className='alert alert-light h4 font-italic mb-4 text-center'>
+                            {`Showing search results for "${
+                                this.props.place
+                            }" `}
+                        </div>
+                    ) : null}
+                    {this.state.mosqueList}
+                </div>
             );
         } catch (err) {
             if (err.error.message === 'Failed to fetch') {
@@ -94,27 +103,47 @@ class Lister extends Component {
                 json: true
             };
             let body = await RequestPromise(requestOptions);
-            let initialMosqueList = await body.results.map(mosque => (
-                <Link
-                    to={`/mosquedetail/${mosque.id}/${mosque.place_id}/${
-                        mosque.distance
-                    }`}
-                    className='text-reset text-decoration-none'
-                    key={mosque.id}>
-                    <ListItem
-                        title={mosque.name}
-                        address={mosque.address}
-                        distance={mosque.distance}
-                    />
-                </Link>
-            ));
-            this.setState({
-                nextPageToken: body.next_page_token,
-                mosqueList: [...initialMosqueList]
-            });
-            this.displayItem = (
-                <div className='container'>{this.state.mosqueList}</div>
-            );
+            if (body.results) {
+                let initialMosqueList = await body.results.map(mosque => (
+                    <Link
+                        to={`/mosquedetail/${mosque.id}/${mosque.place_id}/${
+                            mosque.distance
+                        }`}
+                        className='text-reset text-decoration-none'
+                        key={mosque.id}>
+                        <ListItem
+                            title={mosque.name}
+                            address={mosque.address}
+                            distance={mosque.distance}
+                        />
+                    </Link>
+                ));
+                console.log('initialMosqueList --> ', initialMosqueList);
+                this.setState({
+                    nextPageToken: body.next_page_token,
+                    mosqueList: [...initialMosqueList]
+                });
+                this.displayItem = (
+                    <div className='container'>
+                        {this.props.place ? (
+                            <div className='alert alert-light h4 font-italic mb-4 text-center'>
+                                {`Showing search results for "${
+                                    this.props.place
+                                }" `}
+                            </div>
+                        ) : null}
+                        {this.state.mosqueList}
+                    </div>
+                );
+            } else {
+                this.displayItem = (
+                    <div className='container'>
+                        <div className='alert alert-light h4 font-italic mb-4 text-center'>
+                            {`No results found for "${this.props.place}" `}
+                        </div>
+                    </div>
+                );
+            }
         } catch (err) {
             if (err.error.message === 'Failed to fetch') {
                 this.displayItem = <Alert message='Failed to fetch details' />;
