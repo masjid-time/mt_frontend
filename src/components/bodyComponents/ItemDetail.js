@@ -23,13 +23,13 @@ class ItemDetail extends Component {
     timeRegEx = /^([01][0-9]|2[0-3]):([0-5][0-9])$/;
 
     timeDetailsSchema = Yup.object().shape({
-        FAZR: Yup.string()
+        FAJR: Yup.string()
             .matches(this.timeRegEx, {
                 message: 'Time should be in 24hrs(HH:mm) format.',
                 excludeEmptyString: true
             })
             .required('Time is required'),
-        ZOHR: Yup.string()
+        DHUHR: Yup.string()
             .matches(this.timeRegEx, {
                 message: 'Time should be in 24hrs(HH:mm) format.',
                 excludeEmptyString: true
@@ -80,8 +80,8 @@ class ItemDetail extends Component {
             if (resp.statusCode === 200) {
                 this.setState({
                     time: {
-                        FAZR: values.FAZR,
-                        ZOHR: values.ZOHR,
+                        FAJR: values.FAJR,
+                        DHUHR: values.DHUHR,
                         ASR: values.ASR,
                         MAGHRIB: values.MAGHRIB,
                         ISHA: values.ISHA
@@ -134,8 +134,8 @@ class ItemDetail extends Component {
                         <div className='jumbotron bg-transparent shadow-sm border'>
                             <Formik
                                 initialValues={{
-                                    FAZR: this.state.time.FAZR || '',
-                                    ZOHR: this.state.time.ZOHR || '',
+                                    FAJR: this.state.time.FAJR || '',
+                                    DHUHR: this.state.time.DHUHR || '',
                                     ASR: this.state.time.ASR || '',
                                     MAGHRIB: this.state.time.MAGHRIB || '',
                                     ISHA: this.state.time.ISHA || ''
@@ -180,17 +180,17 @@ class ItemDetail extends Component {
                                                         <th
                                                             scope='row'
                                                             className='align-middle w-50'>
-                                                            FAZR
+                                                            FAJR
                                                         </th>
                                                         <td className='align-middle w-50'>
                                                             <Field
                                                                 className='form-control'
                                                                 type='text'
-                                                                placeholder='FAZR Time'
-                                                                aria-label='FAZR'
-                                                                name='FAZR'
+                                                                placeholder='FAJR Time'
+                                                                aria-label='FAJR'
+                                                                name='FAJR'
                                                             />
-                                                            <ErrorMessage name='FAZR'>
+                                                            <ErrorMessage name='FAJR'>
                                                                 {msg => (
                                                                     <div className='text-danger'>
                                                                         {msg}
@@ -203,17 +203,17 @@ class ItemDetail extends Component {
                                                         <th
                                                             scope='row'
                                                             className='align-middle w-50'>
-                                                            ZOHR
+                                                            DHUHR
                                                         </th>
                                                         <td className='align-middle w-50'>
                                                             <Field
                                                                 className='form-control'
                                                                 type='text'
-                                                                placeholder='ZOHR Time'
-                                                                aria-label='ZOHR'
-                                                                name='ZOHR'
+                                                                placeholder='DHUHR Time'
+                                                                aria-label='DHUHR'
+                                                                name='DHUHR'
                                                             />
-                                                            <ErrorMessage name='ZOHR'>
+                                                            <ErrorMessage name='DHUHR'>
                                                                 {msg => (
                                                                     <div className='text-danger'>
                                                                         {msg}
@@ -332,20 +332,20 @@ class ItemDetail extends Component {
                                             <th
                                                 scope='row'
                                                 className='align-middle w-50'>
-                                                FAZR
+                                                FAJR
                                             </th>
                                             <td className='align-middle w-50'>
-                                                {this.state.time.FAZR}
+                                                {this.state.time.FAJR}
                                             </td>
                                         </tr>
                                         <tr className='h-65px'>
                                             <th
                                                 scope='row'
                                                 className='align-middle w-50'>
-                                                ZOHR
+                                                DHUHR
                                             </th>
                                             <td className='align-middle w-50'>
-                                                {this.state.time.ZOHR}
+                                                {this.state.time.DHUHR}
                                             </td>
                                         </tr>
                                         <tr className='h-65px'>

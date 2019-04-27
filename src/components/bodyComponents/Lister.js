@@ -17,8 +17,8 @@ class Lister extends Component {
         };
         window.onscroll = () => {
             if (
-                window.innerHeight + document.documentElement.scrollTop ===
-                document.documentElement.offsetHeight
+                window.innerHeight + window.pageYOffset >=
+                document.body.offsetHeight - 2
             ) {
                 if (!this.state.isLoadingMore && this.state.nextPageToken) {
                     this.loadMore();
