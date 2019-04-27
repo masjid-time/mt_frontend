@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import RequestPromise from 'request-promise';
 import { toast } from 'react-toastify';
 
@@ -18,6 +19,41 @@ class ItemDetail extends Component {
         this.handleClick = this.handleClick.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    timeRegEx = /^([01][0-9]|2[0-3]):([0-5][0-9])$/;
+
+    timeDetailsSchema = Yup.object().shape({
+        FAZR: Yup.string()
+            .matches(this.timeRegEx, {
+                message: 'Time should be in 24hrs(HH:mm) format.',
+                excludeEmptyString: true
+            })
+            .required('Time is required'),
+        ZOHR: Yup.string()
+            .matches(this.timeRegEx, {
+                message: 'Time should be in 24hrs(HH:mm) format.',
+                excludeEmptyString: true
+            })
+            .required('Time is required'),
+        ASR: Yup.string()
+            .matches(this.timeRegEx, {
+                message: 'Time should be in 24hrs(HH:mm) format.',
+                excludeEmptyString: true
+            })
+            .required('Time is required'),
+        MAGHRIB: Yup.string()
+            .matches(this.timeRegEx, {
+                message: 'Time should be in 24hrs(HH:mm) format.',
+                excludeEmptyString: true
+            })
+            .required('Time is required'),
+        ISHA: Yup.string()
+            .matches(this.timeRegEx, {
+                message: 'Time should be in 24hrs(HH:mm) format.',
+                excludeEmptyString: true
+            })
+            .required('Time is required')
+    });
 
     handleClick() {
         this.setState({ isEditing: true });
@@ -105,6 +141,7 @@ class ItemDetail extends Component {
                                     ISHA: this.state.time.ISHA || ''
                                 }}
                                 onSubmit={this.handleSubmit}
+                                validationSchema={this.timeDetailsSchema}
                                 render={props => (
                                     <Form>
                                         <div className='row no-gutters mb-2'>
@@ -128,7 +165,7 @@ class ItemDetail extends Component {
                                                         disabled={
                                                             props.isSubmitting
                                                         }>
-                                                        <i className='material-icons btn btn-outline-dark active clickable'>
+                                                        <i className='material-icons btn btn-outline-dark active'>
                                                             save
                                                         </i>
                                                     </button>
@@ -153,6 +190,13 @@ class ItemDetail extends Component {
                                                                 aria-label='FAZR'
                                                                 name='FAZR'
                                                             />
+                                                            <ErrorMessage name='FAZR'>
+                                                                {msg => (
+                                                                    <div className='text-danger'>
+                                                                        {msg}
+                                                                    </div>
+                                                                )}
+                                                            </ErrorMessage>
                                                         </td>
                                                     </tr>
                                                     <tr className='h-65px'>
@@ -169,6 +213,13 @@ class ItemDetail extends Component {
                                                                 aria-label='ZOHR'
                                                                 name='ZOHR'
                                                             />
+                                                            <ErrorMessage name='ZOHR'>
+                                                                {msg => (
+                                                                    <div className='text-danger'>
+                                                                        {msg}
+                                                                    </div>
+                                                                )}
+                                                            </ErrorMessage>
                                                         </td>
                                                     </tr>
                                                     <tr className='h-65px'>
@@ -185,6 +236,13 @@ class ItemDetail extends Component {
                                                                 aria-label='ASR'
                                                                 name='ASR'
                                                             />
+                                                            <ErrorMessage name='ASR'>
+                                                                {msg => (
+                                                                    <div className='text-danger'>
+                                                                        {msg}
+                                                                    </div>
+                                                                )}
+                                                            </ErrorMessage>
                                                         </td>
                                                     </tr>
                                                     <tr className='h-65px'>
@@ -201,6 +259,13 @@ class ItemDetail extends Component {
                                                                 aria-label='MAGHRIB'
                                                                 name='MAGHRIB'
                                                             />
+                                                            <ErrorMessage name='MAFHRIB'>
+                                                                {msg => (
+                                                                    <div className='text-danger'>
+                                                                        {msg}
+                                                                    </div>
+                                                                )}
+                                                            </ErrorMessage>
                                                         </td>
                                                     </tr>
                                                     <tr className='h-65px'>
@@ -217,6 +282,13 @@ class ItemDetail extends Component {
                                                                 aria-label='ISHA'
                                                                 name='ISHA'
                                                             />
+                                                            <ErrorMessage name='ISHA'>
+                                                                {msg => (
+                                                                    <div className='text-danger'>
+                                                                        {msg}
+                                                                    </div>
+                                                                )}
+                                                            </ErrorMessage>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -245,7 +317,7 @@ class ItemDetail extends Component {
                                         <button
                                             className='btn btn-link p-0'
                                             onClick={this.handleClick}>
-                                            <i className='material-icons btn btn-outline-dark active clickable'>
+                                            <i className='material-icons btn btn-outline-dark active'>
                                                 edit
                                             </i>
                                         </button>
