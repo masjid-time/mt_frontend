@@ -5,7 +5,7 @@ class ListItem extends Component {
         return (
             <div className='row no-gutters'>
                 <div className='col-md-12'>
-                    <div className='card mb-2 shadow-sm h-md-250'>
+                    <div className='card mb-2 shadow-sm h-md-250 bg-custom'>
                         <div className='card-body'>
                             <div className='row'>
                                 <div className='col-md-10'>

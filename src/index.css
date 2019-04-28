@@ -6,6 +6,7 @@ body {
         'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-image: url('./images/background.jpg');
 }
 
 code {
@@ -27,8 +28,8 @@ code {
     height: 10rem;
 }
 
-.clickable {
-    cursor: pointer;
+.bg-custom {
+    background-color: #f8f8f8;
 }
 
 .h-65px {

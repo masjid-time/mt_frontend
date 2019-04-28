@@ -108,7 +108,7 @@ class ItemDetail extends Component {
             <div className='container'>
                 <div className='row no-gutters'>
                     <div className='col-md-12'>
-                        <div className='card mb-4 shadow-sm h-md-250'>
+                        <div className='card mb-4 shadow-sm h-md-250 bg-custom'>
                             <div className='card-body'>
                                 <div className='row'>
                                     <div className='col-md-12'>
@@ -131,7 +131,7 @@ class ItemDetail extends Component {
                 </div>
                 {this.state.isEditing ? (
                     <>
-                        <div className='jumbotron bg-transparent shadow-sm border'>
+                        <div className='jumbotron bg-custom shadow-sm border'>
                             <Formik
                                 initialValues={{
                                     FAJR: this.state.time.FAJR || '',
@@ -301,7 +301,7 @@ class ItemDetail extends Component {
                     </>
                 ) : (
                     <>
-                        <div className='jumbotron bg-transparent shadow-sm border'>
+                        <div className='jumbotron bg-custom shadow-sm border'>
                             <div className='row no-gutters mb-2'>
                                 <div className='col-md-10'>
                                     {this.state.last_updated ? (

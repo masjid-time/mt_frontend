@@ -12,21 +12,27 @@ class NavbarSearch extends Component {
                 }}
                 render={props => (
                     <Form className='form-inline'>
-                        <Field
-                            className='form-control mr-sm-2'
-                            type='text'
-                            placeholder='Search'
-                            aria-label='Search'
-                            name='search'
-                        />
-                        <button
-                            className='btn btn-dark my-2 my-sm-0'
-                            type='submit'
-                            disabled={props.isSubmitting}>
-                            <i className='material-icons md-light md-24'>
-                                search
-                            </i>
-                        </button>
+                        <div className='col-auto my-1'>
+                            <div className='input-group'>
+                                <Field
+                                    className='form-control h-auto'
+                                    type='text'
+                                    placeholder='Search area'
+                                    aria-label='Search area'
+                                    name='search'
+                                />
+                                <div className='input-group-prepend rounded-right'>
+                                    <button
+                                        className='btn btn-sm btn-dark rounded-right'
+                                        type='submit'
+                                        disabled={props.isSubmitting}>
+                                        <i className='material-icons md-light md-24'>
+                                            search
+                                        </i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </Form>
                 )}
             />
