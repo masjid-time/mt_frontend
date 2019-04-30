@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
+import { Formik, Form, Field } from 'formik';
 import RequestPromise from 'request-promise';
 import { toast } from 'react-toastify';
+import TimePicker from 'rc-time-picker';
+import Moment from 'moment';
 
 class ItemDetail extends Component {
     constructor() {
@@ -20,49 +21,20 @@ class ItemDetail extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    timeRegEx = /^([01][0-9]|2[0-3]):([0-5][0-9])$/;
-
-    timeDetailsSchema = Yup.object().shape({
-        FAJR: Yup.string()
-            .matches(this.timeRegEx, {
-                message: 'Time should be in 24hrs(HH:mm) format.',
-                excludeEmptyString: true
-            })
-            .required('Time is required'),
-        DHUHR: Yup.string()
-            .matches(this.timeRegEx, {
-                message: 'Time should be in 24hrs(HH:mm) format.',
-                excludeEmptyString: true
-            })
-            .required('Time is required'),
-        ASR: Yup.string()
-            .matches(this.timeRegEx, {
-                message: 'Time should be in 24hrs(HH:mm) format.',
-                excludeEmptyString: true
-            })
-            .required('Time is required'),
-        MAGHRIB: Yup.string()
-            .matches(this.timeRegEx, {
-                message: 'Time should be in 24hrs(HH:mm) format.',
-                excludeEmptyString: true
-            })
-            .required('Time is required'),
-        ISHA: Yup.string()
-            .matches(this.timeRegEx, {
-                message: 'Time should be in 24hrs(HH:mm) format.',
-                excludeEmptyString: true
-            })
-            .required('Time is required')
-    });
-
     handleClick() {
         this.setState({ isEditing: true });
     }
 
     async handleSubmit(values, actions) {
         actions.setSubmitting(false);
-        let body = values;
+        let body = Object.fromEntries(
+            Object.entries(values).map(([key, val]) => [
+                key,
+                val.format('HH:mm')
+            ])
+        );
         body.id = this.state.id;
+        console.log(body);
         let requestOptions = {
             uri: `${process.env.REACT_APP_API_URL}/api/v1/mosquedetail`,
             body,
@@ -80,11 +52,11 @@ class ItemDetail extends Component {
             if (resp.statusCode === 200) {
                 this.setState({
                     time: {
-                        FAJR: values.FAJR,
-                        DHUHR: values.DHUHR,
-                        ASR: values.ASR,
-                        MAGHRIB: values.MAGHRIB,
-                        ISHA: values.ISHA
+                        FAJR: body.FAJR,
+                        DHUHR: body.DHUHR,
+                        ASR: body.ASR,
+                        MAGHRIB: body.MAGHRIB,
+                        ISHA: body.ISHA
                     },
                     last_updated: 'Updated Just Now'
                 });
@@ -99,8 +71,42 @@ class ItemDetail extends Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.setState(this.props);
+    }
+
+    timePicker = ({ field, form, ...props }) => {
+        return (
+            <TimePicker
+                name={field.name}
+                defaultValue={field.value}
+                defaultOpenValue={Moment({ hour: 0, minute: 0 })}
+                onChange={val => {
+                    console.log(val);
+                    form.setFieldValue(field.name, val);
+                }}
+                showSecond={false}
+                placeholder={props.placeholder}
+                format='h:mm a'
+                use12Hours
+                inputReadOnly
+                clearIcon={false}
+            />
+        );
+    };
+
+    setMomentValue(dateVal) {
+        if (dateVal) {
+            return Moment(dateVal, 'HH:mm');
+        }
+        return null;
+    }
+
+    displayTime(dateVal) {
+        if (dateVal) {
+            return Moment(dateVal, 'HH:mm').format('h:mm a');
+        }
+        return null;
     }
 
     render() {
@@ -134,14 +140,24 @@ class ItemDetail extends Component {
                         <div className='jumbotron bg-custom shadow-sm border'>
                             <Formik
                                 initialValues={{
-                                    FAJR: this.state.time.FAJR || '',
-                                    DHUHR: this.state.time.DHUHR || '',
-                                    ASR: this.state.time.ASR || '',
-                                    MAGHRIB: this.state.time.MAGHRIB || '',
-                                    ISHA: this.state.time.ISHA || ''
+                                    FAJR: this.setMomentValue(
+                                        this.state.time.FAJR
+                                    ),
+                                    DHUHR: this.setMomentValue(
+                                        this.state.time.DHUHR
+                                    ),
+                                    ASR: this.setMomentValue(
+                                        this.state.time.ASR
+                                    ),
+                                    MAGHRIB: this.setMomentValue(
+                                        this.state.time.MAGHRIB
+                                    ),
+                                    ISHA: this.setMomentValue(
+                                        this.state.time.ISHA
+                                    )
                                 }}
                                 onSubmit={this.handleSubmit}
-                                validationSchema={this.timeDetailsSchema}
+                                // validationSchema={this.timeDetailsSchema}
                                 render={props => (
                                     <Form>
                                         <div className='row no-gutters mb-2'>
@@ -184,19 +200,14 @@ class ItemDetail extends Component {
                                                         </th>
                                                         <td className='align-middle w-50'>
                                                             <Field
+                                                                render={
+                                                                    this
+                                                                        .timePicker
+                                                                }
                                                                 className='form-control'
-                                                                type='text'
                                                                 placeholder='FAJR Time'
-                                                                aria-label='FAJR'
                                                                 name='FAJR'
                                                             />
-                                                            <ErrorMessage name='FAJR'>
-                                                                {msg => (
-                                                                    <div className='text-danger'>
-                                                                        {msg}
-                                                                    </div>
-                                                                )}
-                                                            </ErrorMessage>
                                                         </td>
                                                     </tr>
                                                     <tr className='h-65px'>
@@ -207,19 +218,14 @@ class ItemDetail extends Component {
                                                         </th>
                                                         <td className='align-middle w-50'>
                                                             <Field
+                                                                render={
+                                                                    this
+                                                                        .timePicker
+                                                                }
                                                                 className='form-control'
-                                                                type='text'
                                                                 placeholder='DHUHR Time'
-                                                                aria-label='DHUHR'
                                                                 name='DHUHR'
                                                             />
-                                                            <ErrorMessage name='DHUHR'>
-                                                                {msg => (
-                                                                    <div className='text-danger'>
-                                                                        {msg}
-                                                                    </div>
-                                                                )}
-                                                            </ErrorMessage>
                                                         </td>
                                                     </tr>
                                                     <tr className='h-65px'>
@@ -230,19 +236,14 @@ class ItemDetail extends Component {
                                                         </th>
                                                         <td className='align-middle w-50'>
                                                             <Field
+                                                                render={
+                                                                    this
+                                                                        .timePicker
+                                                                }
                                                                 className='form-control'
-                                                                type='text'
                                                                 placeholder='ASR Time'
-                                                                aria-label='ASR'
                                                                 name='ASR'
                                                             />
-                                                            <ErrorMessage name='ASR'>
-                                                                {msg => (
-                                                                    <div className='text-danger'>
-                                                                        {msg}
-                                                                    </div>
-                                                                )}
-                                                            </ErrorMessage>
                                                         </td>
                                                     </tr>
                                                     <tr className='h-65px'>
@@ -253,19 +254,14 @@ class ItemDetail extends Component {
                                                         </th>
                                                         <td className='align-middle w-50'>
                                                             <Field
+                                                                render={
+                                                                    this
+                                                                        .timePicker
+                                                                }
                                                                 className='form-control'
-                                                                type='text'
                                                                 placeholder='MAGHRIB Time'
-                                                                aria-label='MAGHRIB'
                                                                 name='MAGHRIB'
                                                             />
-                                                            <ErrorMessage name='MAFHRIB'>
-                                                                {msg => (
-                                                                    <div className='text-danger'>
-                                                                        {msg}
-                                                                    </div>
-                                                                )}
-                                                            </ErrorMessage>
                                                         </td>
                                                     </tr>
                                                     <tr className='h-65px'>
@@ -276,19 +272,14 @@ class ItemDetail extends Component {
                                                         </th>
                                                         <td className='align-middle w-50'>
                                                             <Field
+                                                                render={
+                                                                    this
+                                                                        .timePicker
+                                                                }
                                                                 className='form-control'
-                                                                type='text'
                                                                 placeholder='ISHA Time'
-                                                                aria-label='ISHA'
                                                                 name='ISHA'
                                                             />
-                                                            <ErrorMessage name='ISHA'>
-                                                                {msg => (
-                                                                    <div className='text-danger'>
-                                                                        {msg}
-                                                                    </div>
-                                                                )}
-                                                            </ErrorMessage>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -335,7 +326,9 @@ class ItemDetail extends Component {
                                                 FAJR
                                             </th>
                                             <td className='align-middle w-50'>
-                                                {this.state.time.FAJR}
+                                                {this.displayTime(
+                                                    this.state.time.FAJR
+                                                )}
                                             </td>
                                         </tr>
                                         <tr className='h-65px'>
@@ -345,7 +338,9 @@ class ItemDetail extends Component {
                                                 DHUHR
                                             </th>
                                             <td className='align-middle w-50'>
-                                                {this.state.time.DHUHR}
+                                                {this.displayTime(
+                                                    this.state.time.DHUHR
+                                                )}
                                             </td>
                                         </tr>
                                         <tr className='h-65px'>
@@ -355,7 +350,9 @@ class ItemDetail extends Component {
                                                 ASR
                                             </th>
                                             <td className='align-middle w-50'>
-                                                {this.state.time.ASR}
+                                                {this.displayTime(
+                                                    this.state.time.ASR
+                                                )}
                                             </td>
                                         </tr>
                                         <tr className='h-65px'>
@@ -365,7 +362,9 @@ class ItemDetail extends Component {
                                                 MAGHRIB
                                             </th>
                                             <td className='align-middle w-50'>
-                                                {this.state.time.MAGHRIB}
+                                                {this.displayTime(
+                                                    this.state.time.MAGHRIB
+                                                )}
                                             </td>
                                         </tr>
                                         <tr className='h-65px'>
@@ -375,7 +374,9 @@ class ItemDetail extends Component {
                                                 ISHA
                                             </th>
                                             <td className='align-middle w-50'>
-                                                {this.state.time.ISHA}
+                                                {this.displayTime(
+                                                    this.state.time.ISHA
+                                                )}
                                             </td>
                                         </tr>
                                     </tbody>

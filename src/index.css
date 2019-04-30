@@ -1,3 +1,5 @@
+@import '~rc-time-picker/assets/index.css';
+
 body {
     margin: 0;
     padding: 0;
@@ -35,3 +37,20 @@ code {
 .h-65px {
     height: 65px !important;
 }
+
+/* Modied style for rc-time-picker */
+
+.rc-time-picker-input {
+    height: 38px;
+    font-size: 16px;
+}
+
+.rc-time-picker-clear-icon:after {
+    margin-top: 10px;
+}
+
+.rc-time-picker-panel-inner {
+    margin-top: 4px;
+}
+
+/* -------------------------------- */

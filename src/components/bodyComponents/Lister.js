@@ -118,7 +118,6 @@ class Lister extends Component {
                         />
                     </Link>
                 ));
-                console.log('initialMosqueList --> ', initialMosqueList);
                 this.setState({
                     nextPageToken: body.next_page_token,
                     mosqueList: [...initialMosqueList]
