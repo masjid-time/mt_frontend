@@ -112,29 +112,34 @@ class ItemDetail extends Component {
     render() {
         return (
             <div className='container'>
-                <div className='row no-gutters'>
-                    <div className='col-md-12'>
-                        <div className='card mb-4 shadow-sm h-md-250 bg-custom'>
-                            <div className='card-body'>
-                                <div className='row'>
-                                    <div className='col-md-12'>
-                                        <h1 className='card-title text-dark text-left display-4'>
-                                            {this.state.name}
-                                        </h1>
-                                        <h4 className='card-text text-muted text-dark text-left mb-4'>
-                                            {this.state.address}
-                                        </h4>
-                                        <address>
-                                            <strong>
-                                                {this.state.distance}
-                                            </strong>
-                                        </address>
+                <a
+                    className='text-reset text-decoration-none'
+                    target='_blank'
+                    href={this.props.url}>
+                    <div className='row no-gutters'>
+                        <div className='col-md-12'>
+                            <div className='card mb-4 shadow-sm h-md-250 bg-custom'>
+                                <div className='card-body'>
+                                    <div className='row'>
+                                        <div className='col-md-12'>
+                                            <h1 className='card-title text-dark text-left display-4'>
+                                                {this.state.name}
+                                            </h1>
+                                            <h4 className='card-text text-muted text-dark text-left mb-4'>
+                                                {this.state.address}
+                                            </h4>
+                                            <address>
+                                                <strong>
+                                                    {this.state.distance}
+                                                </strong>
+                                            </address>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </a>
                 {this.state.isEditing ? (
                     <>
                         <div className='jumbotron bg-custom shadow-sm border'>
@@ -157,7 +162,6 @@ class ItemDetail extends Component {
                                     )
                                 }}
                                 onSubmit={this.handleSubmit}
-                                // validationSchema={this.timeDetailsSchema}
                                 render={props => (
                                     <Form>
                                         <div className='row no-gutters mb-2'>

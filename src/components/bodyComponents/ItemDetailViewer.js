@@ -29,6 +29,7 @@ class ItemDetailViewer extends Component {
             this.displayItem = (
                 <ItemDetail
                     id={body.id}
+                    url={body.url}
                     name={body.name}
                     address={body.address}
                     time={body.time}
