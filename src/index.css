@@ -8,7 +8,7 @@ body {
         'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-image: url('./images/background.jpg');
+    /* background-image: url('./images/background.jpg'); */
 }
 
 code {
@@ -31,7 +31,7 @@ code {
 }
 
 .bg-custom {
-    background-color: #f8f8f8;
+    background-color: #ffffffe3;
 }
 
 .h-65px {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import RequestPromise from 'request-promise';
 import { toast } from 'react-toastify';
 import TimePicker from 'rc-time-picker';
@@ -56,7 +57,8 @@ class ItemDetail extends Component {
                         DHUHR: body.DHUHR,
                         ASR: body.ASR,
                         MAGHRIB: body.MAGHRIB,
-                        ISHA: body.ISHA
+                        ISHA: body.ISHA,
+                        JUMA: body.JUMA
                     },
                     last_updated: 'Updated Just Now'
                 });
@@ -69,10 +71,6 @@ class ItemDetail extends Component {
         } finally {
             this.setState({ isEditing: false });
         }
-    }
-
-    componentDidMount() {
-        this.setState(this.props);
     }
 
     timePicker = ({ field, form, ...props }) => {
@@ -99,50 +97,71 @@ class ItemDetail extends Component {
         if (dateVal) {
             return Moment(dateVal, 'HH:mm');
         }
-        return null;
+        return '';
     }
 
     displayTime(dateVal) {
         if (dateVal) {
             return Moment(dateVal, 'HH:mm').format('h:mm a');
         }
-        return null;
+        return '';
+    }
+
+    timeDetailsSchema = Yup.object().shape({
+        FAJR: Yup.string().required('Time is required'),
+        DHUHR: Yup.string().required('Time is required'),
+        ASR: Yup.string().required('Time is required'),
+        MAGHRIB: Yup.string().required('Time is required'),
+        ISHA: Yup.string().required('Time is required'),
+        JUMA: Yup.string().required('Time is required')
+    });
+
+    componentDidMount() {
+        this.setState(this.props);
     }
 
     render() {
         return (
             <div className='container'>
-                <a
-                    className='text-reset text-decoration-none'
-                    target='_blank'
-                    href={this.props.url}>
-                    <div className='row no-gutters'>
-                        <div className='col-md-12'>
-                            <div className='card mb-4 shadow-sm h-md-250 bg-custom'>
-                                <div className='card-body'>
-                                    <div className='row'>
-                                        <div className='col-md-12'>
-                                            <h1 className='card-title text-dark text-left display-4'>
-                                                {this.state.name}
-                                            </h1>
-                                            <h4 className='card-text text-muted text-dark text-left mb-4'>
-                                                {this.state.address}
-                                            </h4>
-                                            <address>
-                                                <strong>
-                                                    {this.state.distance}
-                                                </strong>
-                                            </address>
-                                        </div>
+                <div className='row no-gutters'>
+                    <div className='col-md-12'>
+                        <div className='card mb-4 shadow-sm h-md-250 bg-custom'>
+                            <div className='card-body'>
+                                <div className='row'>
+                                    <div className='col-md-11'>
+                                        <h2 className='card-title text-dark text-left'>
+                                            {this.state.name}
+                                        </h2>
+                                        <h6 className='card-text text-muted text-dark text-left'>
+                                            {this.state.address}
+                                        </h6>
+                                        <h6 className='card-text text-dark text-left mb-0'>
+                                            <strong>
+                                                {this.state.distance}
+                                            </strong>
+                                        </h6>
+                                    </div>
+                                    <div className='col-md-1 pr-0'>
+                                        <a
+                                            className='text-reset text-decoration-none'
+                                            target='_blank'
+                                            rel='noopener noreferrer'
+                                            href={this.props.url}>
+                                            <span className='card-text text-dark text-right'>
+                                                <i className='material-icons h1'>
+                                                    launch
+                                                </i>
+                                            </span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </a>
+                </div>
                 {this.state.isEditing ? (
                     <>
-                        <div className='jumbotron bg-custom shadow-sm border'>
+                        <div className='jumbotron bg-custom shadow-sm border py-4'>
                             <Formik
                                 initialValues={{
                                     FAJR: this.setMomentValue(
@@ -159,9 +178,13 @@ class ItemDetail extends Component {
                                     ),
                                     ISHA: this.setMomentValue(
                                         this.state.time.ISHA
+                                    ),
+                                    JUMA: this.setMomentValue(
+                                        this.state.time.JUMA
                                     )
                                 }}
                                 onSubmit={this.handleSubmit}
+                                validationSchema={this.timeDetailsSchema}
                                 render={props => (
                                     <Form>
                                         <div className='row no-gutters mb-2'>
@@ -195,6 +218,20 @@ class ItemDetail extends Component {
 
                                         <div className='row no-gutters'>
                                             <table className='table table-hover border'>
+                                                <thead>
+                                                    <tr className='h-65px'>
+                                                        <th
+                                                            scope='col'
+                                                            className='align-middle w-50'>
+                                                            SALAH
+                                                        </th>
+                                                        <th
+                                                            scope='col'
+                                                            className='align-middle w-50'>
+                                                            IQAMAH
+                                                        </th>
+                                                    </tr>
+                                                </thead>
                                                 <tbody>
                                                     <tr className='h-65px'>
                                                         <th
@@ -209,9 +246,15 @@ class ItemDetail extends Component {
                                                                         .timePicker
                                                                 }
                                                                 className='form-control'
-                                                                placeholder='FAJR Time'
                                                                 name='FAJR'
                                                             />
+                                                            <ErrorMessage name='FAJR'>
+                                                                {msg => (
+                                                                    <div className='text-danger'>
+                                                                        {msg}
+                                                                    </div>
+                                                                )}
+                                                            </ErrorMessage>
                                                         </td>
                                                     </tr>
                                                     <tr className='h-65px'>
@@ -227,9 +270,15 @@ class ItemDetail extends Component {
                                                                         .timePicker
                                                                 }
                                                                 className='form-control'
-                                                                placeholder='DHUHR Time'
                                                                 name='DHUHR'
                                                             />
+                                                            <ErrorMessage name='DHUHR'>
+                                                                {msg => (
+                                                                    <div className='text-danger'>
+                                                                        {msg}
+                                                                    </div>
+                                                                )}
+                                                            </ErrorMessage>
                                                         </td>
                                                     </tr>
                                                     <tr className='h-65px'>
@@ -245,9 +294,15 @@ class ItemDetail extends Component {
                                                                         .timePicker
                                                                 }
                                                                 className='form-control'
-                                                                placeholder='ASR Time'
                                                                 name='ASR'
                                                             />
+                                                            <ErrorMessage name='ASR'>
+                                                                {msg => (
+                                                                    <div className='text-danger'>
+                                                                        {msg}
+                                                                    </div>
+                                                                )}
+                                                            </ErrorMessage>
                                                         </td>
                                                     </tr>
                                                     <tr className='h-65px'>
@@ -263,9 +318,15 @@ class ItemDetail extends Component {
                                                                         .timePicker
                                                                 }
                                                                 className='form-control'
-                                                                placeholder='MAGHRIB Time'
                                                                 name='MAGHRIB'
                                                             />
+                                                            <ErrorMessage name='MAGHRIB'>
+                                                                {msg => (
+                                                                    <div className='text-danger'>
+                                                                        {msg}
+                                                                    </div>
+                                                                )}
+                                                            </ErrorMessage>
                                                         </td>
                                                     </tr>
                                                     <tr className='h-65px'>
@@ -281,9 +342,39 @@ class ItemDetail extends Component {
                                                                         .timePicker
                                                                 }
                                                                 className='form-control'
-                                                                placeholder='ISHA Time'
                                                                 name='ISHA'
                                                             />
+                                                            <ErrorMessage name='ISHA'>
+                                                                {msg => (
+                                                                    <div className='text-danger'>
+                                                                        {msg}
+                                                                    </div>
+                                                                )}
+                                                            </ErrorMessage>
+                                                        </td>
+                                                    </tr>
+                                                    <tr className='h-65px'>
+                                                        <th
+                                                            scope='row'
+                                                            className='align-middle w-50'>
+                                                            JUMA
+                                                        </th>
+                                                        <td className='align-middle w-50'>
+                                                            <Field
+                                                                render={
+                                                                    this
+                                                                        .timePicker
+                                                                }
+                                                                className='form-control'
+                                                                name='JUMA'
+                                                            />
+                                                            <ErrorMessage name='JUMA'>
+                                                                {msg => (
+                                                                    <div className='text-danger'>
+                                                                        {msg}
+                                                                    </div>
+                                                                )}
+                                                            </ErrorMessage>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -296,7 +387,7 @@ class ItemDetail extends Component {
                     </>
                 ) : (
                     <>
-                        <div className='jumbotron bg-custom shadow-sm border'>
+                        <div className='jumbotron bg-custom shadow-sm border py-4'>
                             <div className='row no-gutters mb-2'>
                                 <div className='col-md-10'>
                                     {this.state.last_updated ? (
@@ -322,6 +413,20 @@ class ItemDetail extends Component {
 
                             <div className='row no-gutters'>
                                 <table className='table table-hover border'>
+                                    <thead>
+                                        <tr className='h-65px'>
+                                            <th
+                                                scope='col'
+                                                className='align-middle w-50'>
+                                                SALAH
+                                            </th>
+                                            <th
+                                                scope='col'
+                                                className='align-middle w-50'>
+                                                IQAMAH
+                                            </th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
                                         <tr className='h-65px'>
                                             <th
@@ -380,6 +485,18 @@ class ItemDetail extends Component {
                                             <td className='align-middle w-50'>
                                                 {this.displayTime(
                                                     this.state.time.ISHA
+                                                )}
+                                            </td>
+                                        </tr>
+                                        <tr className='h-65px'>
+                                            <th
+                                                scope='row'
+                                                className='align-middle w-50'>
+                                                JUMA
+                                            </th>
+                                            <td className='align-middle w-50'>
+                                                {this.displayTime(
+                                                    this.state.time.JUMA
                                                 )}
                                             </td>
                                         </tr>

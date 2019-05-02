@@ -12,19 +12,20 @@ class NavbarSearch extends Component {
                 }}
                 render={props => (
                     <Form className='form-inline'>
-                        <div className='col-auto my-1'>
+                        <div className='col-auto my-1 pl-0'>
                             <div className='input-group'>
                                 <Field
                                     className='form-control h-auto'
                                     type='text'
-                                    placeholder='Search area'
-                                    aria-label='Search area'
+                                    placeholder='Search by place'
+                                    aria-label='Search by place'
                                     name='search'
                                 />
                                 <div className='input-group-prepend rounded-right'>
                                     <button
                                         className='btn btn-sm btn-dark rounded-right'
                                         type='submit'
+                                        aria-label='Search button'
                                         disabled={props.isSubmitting}>
                                         <i className='material-icons md-light md-24'>
                                             search

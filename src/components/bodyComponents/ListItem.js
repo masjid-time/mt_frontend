@@ -6,21 +6,21 @@ class ListItem extends Component {
             <div className='row no-gutters'>
                 <div className='col-md-12'>
                     <div className='card mb-2 shadow-sm h-md-250 bg-custom'>
-                        <div className='card-body'>
+                        <div className='card-body p-2'>
                             <div className='row'>
                                 <div className='col-md-10'>
-                                    <h3 className='card-title text-dark text-left display-6'>
+                                    <h5 className='card-text text-dark text-left mb-0'>
                                         {this.props.title}
-                                    </h3>
-                                    <h6 className='card-text text-muted text-dark text-left display-6'>
-                                        {this.props.address}
-                                    </h6>
+                                    </h5>
+                                    <span className='card-text text-muted text-dark text-left'>
+                                        <small>{this.props.address}</small>
+                                    </span>
                                 </div>
 
                                 <div className='card-text col-md-2'>
-                                    <h6 className='card-text text-dark text-left display-6 mt-2'>
-                                        {this.props.distance}
-                                    </h6>
+                                    <span className='card-text text-dark text-left mt-2'>
+                                        <small>{this.props.distance}</small>
+                                    </span>
                                 </div>
                             </div>
                         </div>

@@ -5,8 +5,11 @@ import NavbarSearch from './headerComponents/NavbarSearch';
 class Header extends Component {
     render() {
         return (
-            <nav className='navbar navbar-expand-sml bg-tranparent mb-4'>
-                <NavbarLink linktext='Home' />
+            <nav className='navbar navbar-expand-sm navbar-dark bg-custom mb-4'>
+                <div className='navbar-collapse'>
+                    <NavbarLink linkText='Home' linkPath='/' />
+                    <NavbarLink linkText='About' linkPath='/about' />
+                </div>
                 <NavbarSearch />
             </nav>
         );
