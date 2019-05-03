@@ -80,8 +80,11 @@ class ItemDetail extends Component {
                 defaultValue={field.value}
                 defaultOpenValue={Moment({ hour: 0, minute: 0 })}
                 onChange={val => {
-                    console.log(val);
-                    form.setFieldValue(field.name, val);
+                    if (val === null) {
+                        form.setFieldValue(field.name, '');
+                    } else {
+                        form.setFieldValue(field.name, val);
+                    }
                 }}
                 showSecond={false}
                 placeholder={props.placeholder}
@@ -129,13 +132,13 @@ class ItemDetail extends Component {
                             <div className='card-body'>
                                 <div className='row'>
                                     <div className='col-md-11'>
-                                        <h2 className='card-title text-dark text-left'>
+                                        <h2 className='card-title text-body text-left'>
                                             {this.state.name}
                                         </h2>
-                                        <h6 className='card-text text-muted text-dark text-left'>
+                                        <h6 className='card-text text-body text-left'>
                                             {this.state.address}
                                         </h6>
-                                        <h6 className='card-text text-dark text-left mb-0'>
+                                        <h6 className='card-text text-body text-left mb-0'>
                                             <strong>
                                                 {this.state.distance}
                                             </strong>
@@ -147,7 +150,7 @@ class ItemDetail extends Component {
                                             target='_blank'
                                             rel='noopener noreferrer'
                                             href={this.props.url}>
-                                            <span className='card-text text-dark text-right'>
+                                            <span className='card-text text-body text-right'>
                                                 <i className='material-icons h1'>
                                                     launch
                                                 </i>
@@ -217,18 +220,22 @@ class ItemDetail extends Component {
                                         </div>
 
                                         <div className='row no-gutters'>
-                                            <table className='table table-hover border'>
-                                                <thead>
+                                            <table className='table table-hover shadow-lg'>
+                                                <thead className='bg-custom-thead'>
                                                     <tr className='h-65px'>
                                                         <th
                                                             scope='col'
-                                                            className='align-middle w-50'>
-                                                            SALAH
+                                                            className='align-middle w-50 h5 text-body'>
+                                                            <strong>
+                                                                SALAH
+                                                            </strong>
                                                         </th>
                                                         <th
                                                             scope='col'
-                                                            className='align-middle w-50'>
-                                                            IQAMAH
+                                                            className='align-middle w-50 h5 text-body'>
+                                                            <strong>
+                                                                IQAMAH
+                                                            </strong>
                                                         </th>
                                                     </tr>
                                                 </thead>
@@ -236,10 +243,10 @@ class ItemDetail extends Component {
                                                     <tr className='h-65px'>
                                                         <th
                                                             scope='row'
-                                                            className='align-middle w-50'>
+                                                            className='align-middle w-50 td-border-custom'>
                                                             FAJR
                                                         </th>
-                                                        <td className='align-middle w-50'>
+                                                        <td className='align-middle w-50 td-border-custom'>
                                                             <Field
                                                                 render={
                                                                     this
@@ -260,10 +267,10 @@ class ItemDetail extends Component {
                                                     <tr className='h-65px'>
                                                         <th
                                                             scope='row'
-                                                            className='align-middle w-50'>
+                                                            className='align-middle w-50 td-border-custom'>
                                                             DHUHR
                                                         </th>
-                                                        <td className='align-middle w-50'>
+                                                        <td className='align-middle w-50 td-border-custom'>
                                                             <Field
                                                                 render={
                                                                     this
@@ -284,10 +291,10 @@ class ItemDetail extends Component {
                                                     <tr className='h-65px'>
                                                         <th
                                                             scope='row'
-                                                            className='align-middle w-50'>
+                                                            className='align-middle w-50 td-border-custom'>
                                                             ASR
                                                         </th>
-                                                        <td className='align-middle w-50'>
+                                                        <td className='align-middle w-50 td-border-custom'>
                                                             <Field
                                                                 render={
                                                                     this
@@ -308,10 +315,10 @@ class ItemDetail extends Component {
                                                     <tr className='h-65px'>
                                                         <th
                                                             scope='row'
-                                                            className='align-middle w-50'>
+                                                            className='align-middle w-50 td-border-custom'>
                                                             MAGHRIB
                                                         </th>
-                                                        <td className='align-middle w-50'>
+                                                        <td className='align-middle w-50 td-border-custom'>
                                                             <Field
                                                                 render={
                                                                     this
@@ -332,10 +339,10 @@ class ItemDetail extends Component {
                                                     <tr className='h-65px'>
                                                         <th
                                                             scope='row'
-                                                            className='align-middle w-50'>
+                                                            className='align-middle w-50 td-border-custom'>
                                                             ISHA
                                                         </th>
-                                                        <td className='align-middle w-50'>
+                                                        <td className='align-middle w-50 td-border-custom'>
                                                             <Field
                                                                 render={
                                                                     this
@@ -356,10 +363,10 @@ class ItemDetail extends Component {
                                                     <tr className='h-65px'>
                                                         <th
                                                             scope='row'
-                                                            className='align-middle w-50'>
+                                                            className='align-middle w-50 td-border-custom'>
                                                             JUMA
                                                         </th>
-                                                        <td className='align-middle w-50'>
+                                                        <td className='align-middle w-50 td-border-custom'>
                                                             <Field
                                                                 render={
                                                                     this
@@ -412,18 +419,18 @@ class ItemDetail extends Component {
                             </div>
 
                             <div className='row no-gutters'>
-                                <table className='table table-hover border'>
-                                    <thead>
+                                <table className='table table-hover shadow-lg'>
+                                    <thead className='bg-custom-thead'>
                                         <tr className='h-65px'>
                                             <th
                                                 scope='col'
-                                                className='align-middle w-50'>
-                                                SALAH
+                                                className='align-middle w-50 h5 text-body'>
+                                                <strong>SALAH</strong>
                                             </th>
                                             <th
                                                 scope='col'
-                                                className='align-middle w-50'>
-                                                IQAMAH
+                                                className='align-middle w-50 h5 text-body'>
+                                                <strong>IQAMAH</strong>
                                             </th>
                                         </tr>
                                     </thead>
@@ -431,73 +438,85 @@ class ItemDetail extends Component {
                                         <tr className='h-65px'>
                                             <th
                                                 scope='row'
-                                                className='align-middle w-50'>
+                                                className='align-middle w-50 td-border-custom'>
                                                 FAJR
                                             </th>
-                                            <td className='align-middle w-50'>
-                                                {this.displayTime(
-                                                    this.state.time.FAJR
-                                                )}
+                                            <td className='align-middle w-50 td-border-custom'>
+                                                <strong>
+                                                    {this.displayTime(
+                                                        this.state.time.FAJR
+                                                    )}
+                                                </strong>
                                             </td>
                                         </tr>
                                         <tr className='h-65px'>
                                             <th
                                                 scope='row'
-                                                className='align-middle w-50'>
+                                                className='align-middle w-50 td-border-custom'>
                                                 DHUHR
                                             </th>
-                                            <td className='align-middle w-50'>
-                                                {this.displayTime(
-                                                    this.state.time.DHUHR
-                                                )}
+                                            <td className='align-middle w-50 td-border-custom'>
+                                                <strong>
+                                                    {this.displayTime(
+                                                        this.state.time.DHUHR
+                                                    )}
+                                                </strong>
                                             </td>
                                         </tr>
                                         <tr className='h-65px'>
                                             <th
                                                 scope='row'
-                                                className='align-middle w-50'>
+                                                className='align-middle w-50 td-border-custom'>
                                                 ASR
                                             </th>
-                                            <td className='align-middle w-50'>
-                                                {this.displayTime(
-                                                    this.state.time.ASR
-                                                )}
+                                            <td className='align-middle w-50 td-border-custom'>
+                                                <strong>
+                                                    {this.displayTime(
+                                                        this.state.time.ASR
+                                                    )}
+                                                </strong>
                                             </td>
                                         </tr>
                                         <tr className='h-65px'>
                                             <th
                                                 scope='row'
-                                                className='align-middle w-50'>
+                                                className='align-middle w-50 td-border-custom'>
                                                 MAGHRIB
                                             </th>
-                                            <td className='align-middle w-50'>
-                                                {this.displayTime(
-                                                    this.state.time.MAGHRIB
-                                                )}
+                                            <td className='align-middle w-50 td-border-custom'>
+                                                <strong>
+                                                    {this.displayTime(
+                                                        this.state.time.MAGHRIB
+                                                    )}
+                                                </strong>
                                             </td>
                                         </tr>
                                         <tr className='h-65px'>
                                             <th
                                                 scope='row'
-                                                className='align-middle w-50'>
+                                                className='align-middle w-50 td-border-custom'>
                                                 ISHA
                                             </th>
-                                            <td className='align-middle w-50'>
-                                                {this.displayTime(
-                                                    this.state.time.ISHA
-                                                )}
+                                            <td className='align-middle w-50 td-border-custom'>
+                                                <strong>
+                                                    {this.displayTime(
+                                                        this.state.time.ISHA
+                                                    )}
+                                                </strong>
                                             </td>
                                         </tr>
                                         <tr className='h-65px'>
                                             <th
                                                 scope='row'
-                                                className='align-middle w-50'>
+                                                className='align-middle w-50 td-border-custom'>
                                                 JUMA
                                             </th>
-                                            <td className='align-middle w-50'>
-                                                {this.displayTime(
-                                                    this.state.time.JUMA
-                                                )}
+                                            <td className='align-middle w-50 td-border-custom'>
+                                                <strong>
+                                                    {this.displayTime(
+                                                        this.state.time.JUMA
+                                                    )}
+                                                </strong>
                                             </td>
                                         </tr>
                                     </tbody>

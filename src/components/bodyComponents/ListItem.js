@@ -9,16 +9,16 @@ class ListItem extends Component {
                         <div className='card-body p-2'>
                             <div className='row'>
                                 <div className='col-md-10'>
-                                    <h5 className='card-text text-dark text-left mb-0'>
+                                    <h4 className='card-text text-body text-left mb-0'>
                                         {this.props.title}
-                                    </h5>
-                                    <span className='card-text text-muted text-dark text-left'>
+                                    </h4>
+                                    <span className='card-text text-body text-body text-left'>
                                         <small>{this.props.address}</small>
                                     </span>
                                 </div>
 
                                 <div className='card-text col-md-2'>
-                                    <span className='card-text text-dark text-left mt-2'>
+                                    <span className='card-text text-body text-left mt-2'>
                                         <small>{this.props.distance}</small>
                                     </span>
                                 </div>

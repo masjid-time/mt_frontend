@@ -125,7 +125,7 @@ class Lister extends Component {
                 this.displayItem = (
                     <div className='container'>
                         {this.props.place ? (
-                            <div className='alert alert-light h4 font-italic mb-4 text-center'>
+                            <div className='alert alert-light h4 font-italic mb-4 text-center bg-transparent border-0 text-body'>
                                 {`Showing search results for "${
                                     this.props.place
                                 }" `}
@@ -137,7 +137,7 @@ class Lister extends Component {
             } else {
                 this.displayItem = (
                     <div className='container'>
-                        <div className='alert alert-light h4 font-italic mb-4 text-center'>
+                        <div className='alert alert-light h4 font-italic mb-4 text-center bg-transparent border-0 text-body'>
                             {`No results found for "${this.props.place}" `}
                         </div>
                     </div>
@@ -164,7 +164,9 @@ class Lister extends Component {
                 <>
                     {this.displayItem}
                     <div className='text-center mt-4'>
-                        <div className='spinner-border' role='status'>
+                        <div
+                            className='spinner-border text-light'
+                            role='status'>
                             <span className='sr-only'>Loading...</span>
                         </div>
                     </div>

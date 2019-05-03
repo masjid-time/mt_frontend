@@ -5,16 +5,16 @@ class About extends Component {
         return (
             <div className='container'>
                 <div className='card-deck'>
-                    <div class='card mb-3'>
+                    <div class='card bg-custom mb-3'>
                         <div class='row no-gutters'>
                             <div class='col-md-4'>
                                 <img src='...' class='card-img' alt='...' />
                             </div>
                             <div class='col-md-8'>
                                 <div class='card-body'>
-                                    <h5 class='card-title'>Title</h5>
-                                    <p class='card-text'>Details</p>
-                                    <p class='card-text'>
+                                    <h5 class='card-title text-body'>Title</h5>
+                                    <p class='card-text text-body'>Details</p>
+                                    <p class='card-text text-body'>
                                         <small class='text-muted'>
                                             Contacts
                                         </small>

@@ -6,7 +6,7 @@ class NavbarLink extends Component {
         return (
             <Link
                 to={this.props.linkPath}
-                className='navbar-brand text-dark text-decoration-none font-weight-bold'>
+                className='navbar-brand text-body text-decoration-none font-weight-bold'>
                 {this.props.linkText}
             </Link>
         );
