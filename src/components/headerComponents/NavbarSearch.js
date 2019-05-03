@@ -7,6 +7,7 @@ class NavbarSearch extends Component {
             <Formik
                 initialValues={{ search: '' }}
                 onSubmit={(values, actions) => {
+                    actions.setSubmitting(true);
                     window.location.href = `/search/${values.search}`;
                     actions.setSubmitting(false);
                 }}

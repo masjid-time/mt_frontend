@@ -27,7 +27,7 @@ class ItemDetail extends Component {
     }
 
     async handleSubmit(values, actions) {
-        actions.setSubmitting(false);
+        actions.setSubmitting(true);
         let body = Object.fromEntries(
             Object.entries(values).map(([key, val]) => [
                 key,
@@ -35,7 +35,6 @@ class ItemDetail extends Component {
             ])
         );
         body.id = this.state.id;
-        console.log(body);
         let requestOptions = {
             uri: `${process.env.REACT_APP_API_URL}/api/v1/mosquedetail`,
             body,
@@ -69,6 +68,7 @@ class ItemDetail extends Component {
         } catch {
             toast.error('Failed to save data');
         } finally {
+            actions.setSubmitting(false);
             this.setState({ isEditing: false });
         }
     }
