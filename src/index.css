@@ -8,11 +8,13 @@ body {
         'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-image: url('./images/background.jpg');
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center center;
+    background: url('./images/background.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
+    height: 100%;
+    /* overflow: hidden; */
 }
 
 code {
