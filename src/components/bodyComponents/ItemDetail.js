@@ -152,7 +152,7 @@ class ItemDetail extends Component {
                                             href={this.props.url}>
                                             <span className='card-text text-body text-right'>
                                                 <i className='material-icons h1'>
-                                                    launch
+                                                    map
                                                 </i>
                                             </span>
                                         </a>
