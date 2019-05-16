@@ -25,9 +25,15 @@ code {
 }
 
 .handwriting {
-    color: rgb(250, 239, 225);
-    margin-top: 0.5rem;
+    color: rgb(255, 255, 225);
+    margin-top: 1rem;
     font-family: 'Kaushan Script', cursive;
+}
+
+.about-height {
+    margin-top: -1.5rem;
+    height: 80vh !important;
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .vertical-align-middle {
@@ -42,14 +48,6 @@ code {
 .spinner-grow-bg {
     width: 10rem;
     height: 10rem;
-}
-
-.about-height {
-    height: 33% !important;
-}
-.about-padding {
-    padding-left: 1% !important;
-    padding-right: 1% !important;
 }
 
 .h-65px {

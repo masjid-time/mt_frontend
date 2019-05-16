@@ -22,13 +22,13 @@ toast.configure({
 class App extends Component {
     render() {
         return (
-            <div className='Container mb-5'>
+            <>
                 <Router>
                     <Header />
                     <Body />
                     <Footer />
                 </Router>
-            </div>
+            </>
         );
     }
 }

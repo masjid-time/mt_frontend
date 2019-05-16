@@ -161,7 +161,7 @@ class Lister extends Component {
             return <Loader />;
         } else if (this.state.isLoadingMore) {
             return (
-                <>
+                <div className='mb-4'>
                     {this.displayItem}
                     <div className='text-center mt-4'>
                         <div
@@ -170,10 +170,10 @@ class Lister extends Component {
                             <span className='sr-only'>Loading...</span>
                         </div>
                     </div>
-                </>
+                </div>
             );
         } else {
-            return this.displayItem;
+            return <div className='mb-4'>{this.displayItem}</div>;
         }
     }
 }
