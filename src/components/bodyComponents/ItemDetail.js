@@ -144,17 +144,18 @@ class ItemDetail extends Component {
                                             </strong>
                                         </h6>
                                     </div>
-                                    <div className='col-md-1 pr-0'>
+                                    <div className='col-md-1 text-left mt-3'>
                                         <a
-                                            className='text-reset text-decoration-none'
+                                            className='text-reset text-decoration-none '
                                             target='_blank'
                                             rel='noopener noreferrer'
                                             href={this.props.url}>
-                                            <span className='card-text text-body text-right'>
-                                                <i className='material-icons h1'>
+                                            <span className='card-text text-body'>
+                                                <i className='material-icons h1 mb-n2'>
                                                     map
                                                 </i>
                                             </span>
+                                            <p className='mt-n2'>map</p>
                                         </a>
                                     </div>
                                 </div>
