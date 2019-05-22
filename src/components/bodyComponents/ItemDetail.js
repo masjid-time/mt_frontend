@@ -144,7 +144,7 @@ class ItemDetail extends Component {
                                             </strong>
                                         </h6>
                                     </div>
-                                    <div className='col-md-1 text-left mt-3'>
+                                    <div className='col-md-1 mt-3'>
                                         <a
                                             className='text-reset text-decoration-none '
                                             target='_blank'
@@ -155,7 +155,7 @@ class ItemDetail extends Component {
                                                     map
                                                 </i>
                                             </span>
-                                            <p className='mt-n2'>map</p>
+                                            <p className='mt-n2 pl-1'>map</p>
                                         </a>
                                     </div>
                                 </div>

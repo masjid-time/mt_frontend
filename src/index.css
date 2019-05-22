@@ -26,15 +26,13 @@ code {
 
 .handwriting {
     color: rgb(255, 255, 225);
-    margin-top: 5rem;
+    margin-top: 5%;
     font-family: 'Kaushan Script', cursive;
-    font-size: 5vw;
+    font-size: 4vw;
 }
 
-.about-height {
-    margin-top: -1.5rem;
-    height: 80vh !important;
-    background-color: rgba(0, 0, 0, 0.4);
+.about-margin {
+    margin-top: 20vh;
 }
 
 .vertical-align-middle {
