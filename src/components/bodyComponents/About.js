@@ -4,7 +4,7 @@ import cardImage from './../../images/background.jpg';
 class About extends Component {
     render() {
         return (
-            <div className='container about-margin'>
+            <div className='container'>
                 <div className='card-deck mb-0'>
                     <div className='card mb-0 border-0 shadow-lg'>
                         <img
