@@ -28,7 +28,17 @@ code {
     color: rgb(255, 255, 225);
     margin-top: 5%;
     font-family: 'Kaushan Script', cursive;
-    font-size: 4vw;
+    font-size: 5vw;
+}
+
+.about-img {
+    max-height: 78vh;
+    width: auto;
+    object-fit: cover;
+}
+
+.about-card {
+    height: 100%;
 }
 
 .vertical-align-middle {
