@@ -31,8 +31,26 @@ code {
     font-size: 5vw;
 }
 
+.twitter-logo-size {
+    max-height: 64px;
+    max-width: 64px;
+    min-height: 16px;
+    min-width: 16px;
+}
+
+.github-logo-size {
+    max-height: 48px;
+    max-width: 48px;
+    min-height: 16px;
+    min-width: 16px;
+}
+
+.overlay-bottom {
+    bottom: 20vh;
+}
+
 .about-img {
-    max-height: 78vh;
+    max-height: 72vh;
     width: auto;
     object-fit: cover;
 }
