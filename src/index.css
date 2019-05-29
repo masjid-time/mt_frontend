@@ -24,6 +24,10 @@ code {
         monospace;
 }
 
+#root {
+    min-height: 100%;
+}
+
 .handwriting {
     color: rgb(255, 255, 225);
     margin-top: 5%;
@@ -49,14 +53,18 @@ code {
     bottom: 20vh;
 }
 
+.about-height {
+    min-height: 100vh;
+}
+
 .about-img {
-    max-height: 72vh;
+    max-height: 45vh;
     width: auto;
     object-fit: cover;
 }
 
 .about-card {
-    height: 100%;
+    min-height: 100%;
 }
 
 .vertical-align-middle {

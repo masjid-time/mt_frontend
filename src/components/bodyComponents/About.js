@@ -13,15 +13,16 @@ class About extends Component {
                         Worries end... When SALAH begins
                     </div>
                     <div className='card-body about-card'>
-                        <h5 className='card-title text-center'>Our Mission</h5>
+                        <br />
+                        <h5 className='h4 text-center font-weight-bolder'>
+                            Our Mission
+                        </h5>
                         <p className='card-text text-center'>
                             Create an Islamic website with easy access to
                             masjids with prayer timings so you can be worry free
                             and have your salah at the right time and at the
                             right place.
                         </p>
-                        <br />
-                        <br />
                         <br />
                         <p className='card-text text-center'>
                             <small className='text-muted '>
